@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soulbrush Creative Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&family=Noto+Serif+TC:wght@200;300;400;600&family=Noto+Sans+TC:wght@100;300;400&family=LXGW+WenKai+TC:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/wallpaper.css">
+</head>
+<body>
+
+<!-- Mode Switcher -->
+<div class="mode-switcher">
+  <button class="mode-btn active" onclick="switchMode('ig', this)">IG Layout</button>
+  <button class="mode-btn" onclick="switchMode('wallpaper', this)">Wallpaper</button>
+  <button class="mode-btn" onclick="switchMode('print', this)">Print</button>
+</div>
+
+<!-- ═══ IG LAYOUT MODE ═══ -->
+<div class="mode-panel ig-mode active" id="mode-ig">
+
+<!-- Controls -->
+<div class="controls">
+  <h3>Template</h3>
+
+  <div class="tab-row">
+    <button class="tab active" onclick="switchTemplate('title', false, this)">Title</button>
+    <button class="tab" onclick="switchTemplate('text', false, this)">Text</button>
+    <button class="tab" onclick="switchTemplate('list', false, this)">List</button>
+    <button class="tab" onclick="switchTemplate('cta', false, this)">CTA</button>
+    <button class="tab" onclick="switchTemplate('artwork', false, this)">Artwork</button>
+    <button class="tab" onclick="switchTemplate('feature', false, this)">Feature</button>
+  </div>
+
+  <h3>Aspect Ratio</h3>
+
+  <div class="tab-row">
+    <button class="tab ratio-tab active" onclick="switchRatio('9/16', this)">Story 9:16</button>
+    <button class="tab ratio-tab" onclick="switchRatio('4/5', this)">Post 4:5</button>
+    <button class="tab ratio-tab" onclick="switchRatio('1/1', this)">Square 1:1</button>
+  </div>
+
+  <h3>Heading Font</h3>
+
+  <div class="font-row" id="heading-font-row">
+    <button class="font-option active" onclick="switchHeadingFont('Cormorant Garamond', this)">
+      <span class="font-name">English</span>
+      <span class="font-preview" style="font-family:'Cormorant Garamond',serif">Cormorant Garamond</span>
+    </button>
+    <button class="font-option" onclick="switchHeadingFont('Playfair Display', this)">
+      <span class="font-name">English</span>
+      <span class="font-preview" style="font-family:'Playfair Display',serif">Playfair Display</span>
+    </button>
+    <button class="font-option" onclick="switchHeadingFont('Noto Serif TC', this)">
+      <span class="font-name">中文 襯線</span>
+      <span class="font-preview" style="font-family:'Noto Serif TC',serif">思源宋體</span>
+    </button>
+    <button class="font-option" onclick="switchHeadingFont('Noto Sans TC', this)">
+      <span class="font-name">中文 無襯線</span>
+      <span class="font-preview" style="font-family:'Noto Sans TC',sans-serif">思源黑體</span>
+    </button>
+    <button class="font-option" onclick="switchHeadingFont('LXGW WenKai TC', this)">
+      <span class="font-name">中文 手寫</span>
+      <span class="font-preview" style="font-family:'LXGW WenKai TC',cursive">霞鶩文楷</span>
+    </button>
+    <button class="font-option" onclick="switchHeadingFont('ChenYuluoyan', this)">
+      <span class="font-name">中文 落雁</span>
+      <span class="font-preview" style="font-family:'ChenYuluoyan',cursive">辰宇落雁體</span>
+    </button>
+  </div>
+
+  <h3>Body Font</h3>
+
+  <div class="font-row" id="body-font-row">
+    <button class="font-option active" onclick="switchBodyFont('Jost', this)">
+      <span class="font-name">English</span>
+      <span class="font-preview" style="font-family:'Jost',sans-serif">Jost</span>
+    </button>
+    <button class="font-option" onclick="switchBodyFont('Cormorant Garamond', this)">
+      <span class="font-name">English</span>
+      <span class="font-preview" style="font-family:'Cormorant Garamond',serif">Cormorant Garamond</span>
+    </button>
+    <button class="font-option" onclick="switchBodyFont('Playfair Display', this)">
+      <span class="font-name">English</span>
+      <span class="font-preview" style="font-family:'Playfair Display',serif">Playfair Display</span>
+    </button>
+    <button class="font-option" onclick="switchBodyFont('Noto Serif TC', this)">
+      <span class="font-name">中文 襯線</span>
+      <span class="font-preview" style="font-family:'Noto Serif TC',serif">思源宋體</span>
+    </button>
+    <button class="font-option" onclick="switchBodyFont('Noto Sans TC', this)">
+      <span class="font-name">中文 無襯線</span>
+      <span class="font-preview" style="font-family:'Noto Sans TC',sans-serif">思源黑體</span>
+    </button>
+    <button class="font-option" onclick="switchBodyFont('LXGW WenKai TC', this)">
+      <span class="font-name">中文 手寫</span>
+      <span class="font-preview" style="font-family:'LXGW WenKai TC',cursive">霞鶩文楷</span>
+    </button>
+    <button class="font-option" onclick="switchBodyFont('ChenYuluoyan', this)">
+      <span class="font-name">中文 落雁</span>
+      <span class="font-preview" style="font-family:'ChenYuluoyan',cursive">辰宇落雁體</span>
+    </button>
+  </div>
+
+  <h3>Font Size</h3>
+
+  <div class="size-row">
+    <div class="size-control" data-templates="title text list cta artwork feature">
+      <span class="size-label">Heading</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="adjustSize('heading', -2)">−</button>
+        <span class="size-value" id="heading-val">36px</span>
+        <button class="size-btn" onclick="adjustSize('heading', 2)">+</button>
+      </div>
+    </div>
+    <div class="size-control" data-templates="title list cta artwork">
+      <span class="size-label">Subhead</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="adjustSize('subheading', -2)">−</button>
+        <span class="size-value" id="subheading-val">22px</span>
+        <button class="size-btn" onclick="adjustSize('subheading', 2)">+</button>
+      </div>
+    </div>
+    <div class="size-control" data-templates="title list cta artwork feature">
+      <span class="size-label">Body</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="adjustSize('body', -1)">−</button>
+        <span class="size-value" id="body-val">13px</span>
+        <button class="size-btn" onclick="adjustSize('body', 1)">+</button>
+      </div>
+    </div>
+    <div class="size-control" data-templates="title text">
+      <span class="size-label">Paragraph</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="adjustSize('paragraph', -1)">−</button>
+        <span class="size-value" id="paragraph-val">12px</span>
+        <button class="size-btn" onclick="adjustSize('paragraph', 1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px">Text Color</h3>
+
+  <div class="color-target-toggle">
+    <button class="color-target-btn active" data-templates="title text list cta artwork feature" onclick="setColorTarget('heading', this)">Heading</button>
+    <button class="color-target-btn" data-templates="title list cta artwork" onclick="setColorTarget('subheading', this)">Subhead</button>
+    <button class="color-target-btn" data-templates="title text list cta artwork feature" onclick="setColorTarget('body', this)">Body</button>
+  </div>
+
+  <div class="color-row" id="color-row">
+    <button class="color-swatch active" style="background:#ffffff" onclick="applyTextColor('#ffffff', this)" title="White"></button>
+    <button class="color-swatch" style="background:#c9b8ff" onclick="applyTextColor('#c9b8ff', this)" title="Lavender"></button>
+    <button class="color-swatch" style="background:#e8c97a" onclick="applyTextColor('#e8c97a', this)" title="Gold"></button>
+    <button class="color-swatch" style="background:#f5a0c0" onclick="applyTextColor('#f5a0c0', this)" title="Rose"></button>
+    <button class="color-swatch" style="background:#a0d8c0" onclick="applyTextColor('#a0d8c0', this)" title="Sage"></button>
+    <button class="color-swatch" style="background:#a0c4f5" onclick="applyTextColor('#a0c4f5', this)" title="Sky"></button>
+    <button class="color-swatch" style="background:rgba(255,255,255,0.5)" onclick="applyTextColor('rgba(255,255,255,0.5)', this)" title="Muted"></button>
+    <div class="color-custom" title="Custom color">
+      <input type="color" value="#ffffff" oninput="applyTextColor(this.value, null)">
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px">Text Effect</h3>
+
+  <div class="text-effect-row">
+    <button class="text-effect-btn" onclick="toggleTextEffect('shadow', this)">Shadow</button>
+    <button class="text-effect-btn" onclick="toggleTextEffect('bg', this)">Background Box</button>
+  </div>
+
+  <h3 style="margin-top:20px">Watermark</h3>
+
+  <div class="watermark-controls">
+    <div class="wm-toggle-row">
+      <button class="text-effect-btn" id="wm-toggle" onclick="toggleWatermark(this)">Off</button>
+      <input type="text" class="wm-text-input" id="wm-text" value="© Soulbrush Studio" oninput="updateWatermark()" placeholder="Watermark text">
+    </div>
+    <div class="wm-options" id="wm-options" style="display:none">
+      <div class="wm-position-row">
+        <button class="wm-pos-btn" onclick="setWmPosition('top-left', this)" title="Top Left">↖</button>
+        <button class="wm-pos-btn" onclick="setWmPosition('top-right', this)" title="Top Right">↗</button>
+        <button class="wm-pos-btn active" onclick="setWmPosition('bottom-right', this)" title="Bottom Right">↘</button>
+        <button class="wm-pos-btn" onclick="setWmPosition('bottom-left', this)" title="Bottom Left">↙</button>
+        <button class="wm-pos-btn" onclick="setWmPosition('center', this)" title="Center">✦</button>
+      </div>
+      <div class="opacity-control">
+        <label>Opacity</label>
+        <input type="range" class="opacity-slider" min="10" max="80" value="35" oninput="setWmOpacity(this.value)">
+      </div>
+    </div>
+  </div>
+
+  <div class="image-controls">
+    <button class="img-btn" onclick="document.getElementById('img-upload').click()">Add Image</button>
+    <button class="img-btn remove" id="remove-img-btn" onclick="removeImage()" style="display:none">Remove</button>
+    <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+    <div class="opacity-control" id="opacity-ctrl" style="display:none">
+      <label>Overlay</label>
+      <input type="range" class="opacity-slider" min="0" max="85" value="55" oninput="setOverlayOpacity(this.value)">
+    </div>
+  </div>
+</div>
+
+<div class="canvas-column">
+<!-- Canvas -->
+<div class="canvas-wrapper">
+  <div class="story-canvas">
+    <div class="bg"></div>
+    <div class="bg-image" id="bg-image"></div>
+    <div class="bg-image-overlay" id="bg-overlay" style="display:none"></div>
+    <div class="stars" id="stars"></div>
+    <div class="glow"></div>
+
+    <div class="content">
+      <div class="brand-label" style="font-size:9px">SOULBRUSH STUDIO</div>
+
+      <!-- TITLE TEMPLATE -->
+      <div class="main-content template title-card active" id="tpl-title">
+        <div class="eyebrow" id="eyebrow-text" style="font-size:10px" contenteditable>SOUL PORTRAIT</div>
+        <div class="heading" id="heading-text" style="font-size:36px" contenteditable>HEADING<br>HERE</div>
+        <div class="subheading" id="subheading-text" style="font-size:22px" contenteditable>Subheading here</div>
+        <div class="divider"></div>
+        <div class="tagline" id="tagline-text" style="font-size:13px" contenteditable>Your tagline or description goes here, keep it short and poetic</div>
+        <div class="body-text" id="body-text" style="font-size:12px" contenteditable>Add a paragraph here for longer descriptions — about your art, Reiki practice, or anything you want to share. Delete this text if you don't need it.</div>
+      </div>
+
+      <!-- LIST TEMPLATE -->
+      <div class="main-content template list-card" id="tpl-list">
+        <div class="section-title" id="list-heading" style="font-size:36px" contenteditable>Section Title</div>
+        <div class="section-sub" id="list-sub" style="font-size:22px" contenteditable>Optional subheading</div>
+        <div class="list-items" id="list-items">
+          <div class="list-item">
+            <span class="list-icon" style="font-size:13px">&#10022;</span>
+            <div>
+              <span class="list-item-title" style="font-size:13px" contenteditable>Item Title One</span>
+              <span class="list-item-desc" style="font-size:11px" contenteditable>Short description or detail here</span>
+            </div>
+          </div>
+          <div class="list-item">
+            <span class="list-icon" style="font-size:13px">&#10022;</span>
+            <div>
+              <span class="list-item-title" style="font-size:13px" contenteditable>Item Title Two</span>
+              <span class="list-item-desc" style="font-size:11px" contenteditable>Short description or detail here</span>
+            </div>
+          </div>
+          <div class="list-item">
+            <span class="list-icon" style="font-size:13px">&#10022;</span>
+            <div>
+              <span class="list-item-title" style="font-size:13px" contenteditable>Item Title Three</span>
+              <span class="list-item-desc" style="font-size:11px" contenteditable>Short description or detail here</span>
+            </div>
+          </div>
+          <div class="list-item">
+            <span class="list-icon" style="font-size:13px">&#10022;</span>
+            <div>
+              <span class="list-item-title" style="font-size:13px" contenteditable>Item Title Four</span>
+              <span class="list-item-desc" style="font-size:11px" contenteditable>Short description or detail here</span>
+            </div>
+          </div>
+        </div>
+        <div class="list-actions">
+          <button class="list-action-btn" onclick="removeListItem()" title="Remove item">−</button>
+          <button class="list-action-btn" onclick="addListItem()" title="Add item">+</button>
+        </div>
+      </div>
+
+      <!-- TEXT TEMPLATE -->
+      <div class="main-content template text-card" id="tpl-text">
+        <div class="text-heading" id="text-heading" style="font-size:28px" contenteditable>🌙 嗨, 我是 Laisa</div>
+        <div class="divider"></div>
+        <div class="text-body" id="text-body" style="font-size:12px" contenteditable>生物背景的畫家，住在台中。從小就很愛動物，也很喜歡畫畫。曾經把獸醫當成目標，因為我想為那些無法為自己說話的動物發聲。後來的我走了不同的路，但那個初心依然存在，只是換了一種方式。</div>
+      </div>
+
+      <!-- CTA TEMPLATE -->
+      <div class="main-content template cta-card" id="tpl-cta">
+        <div class="heading" id="cta-heading" style="font-size:36px" contenteditable>Ready to<br>Commission?</div>
+        <div class="subheading" id="cta-sub" style="font-size:22px" contenteditable>Subheading here</div>
+        <div class="divider"></div>
+        <div class="cta-body" id="cta-body" style="font-size:13px" contenteditable>DM me with your companion's photos, their personality & story, and preferred size</div>
+        <div class="cta-highlight" style="font-size:11px" contenteditable>LIMITED SLOTS AVAILABLE &#10022;</div>
+      </div>
+
+      <!-- ARTWORK TEMPLATE -->
+      <div class="main-content template artwork-card" id="tpl-artwork">
+        <div class="artwork-eyebrow" id="artwork-eyebrow" style="font-size:10px" contenteditable>No. 001 — SOUL PORTRAIT SERIES</div>
+        <div class="artwork-image-area" onclick="document.getElementById('artwork-upload').click()">
+          <div class="artwork-image-placeholder" id="artwork-placeholder">Click to add artwork</div>
+          <img id="artwork-img" src="" alt="" style="display:none">
+        </div>
+        <input type="file" id="artwork-upload" accept="image/*" style="display:none" onchange="handleArtworkUpload(event)">
+        <div class="artwork-text-block">
+          <div class="artwork-title-zh" id="artwork-zh" style="font-size:18px" contenteditable>秋日午後的暖光裡</div>
+          <div class="artwork-title-en" id="artwork-en" style="font-size:16px" contenteditable>Autumn Warmth</div>
+          <div class="artwork-meta" id="artwork-meta" style="font-size:9px" contenteditable>Soulbrush Studio · 2024</div>
+        </div>
+      </div>
+
+      <!-- FEATURE TEMPLATE (image top + text below) -->
+      <div class="main-content template feature-card" id="tpl-feature">
+        <div class="feature-image-area" onclick="document.getElementById('feature-upload').click()">
+          <div class="feature-placeholder" id="feature-placeholder">Click to add image</div>
+          <img id="feature-img" src="" alt="" style="display:none">
+        </div>
+        <input type="file" id="feature-upload" accept="image/*" style="display:none" onchange="handleFeatureUpload(event)">
+        <div class="feature-text-block">
+          <div class="feature-heading" id="feature-heading" style="font-size:36px" contenteditable>✨ Sharing something new</div>
+          <div class="divider"></div>
+          <div class="feature-body" id="feature-body" style="font-size:13px" contenteditable>Some of my art is now available as digital prints on Payhip. Starting small, adding more along the way 💙</div>
+          <div class="feature-body-zh" id="feature-body-zh" style="font-size:13px" contenteditable>部分作品現已提供數位下載<br>會慢慢增加更多作品 ✨</div>
+          <div class="divider"></div>
+          <div class="feature-cta" id="feature-cta" style="font-size:13px" contenteditable>Link in bio</div>
+        </div>
+      </div>
+
+      <div class="swipe-hint">SWIPE FOR DETAILS →</div>
+      <div class="footer-label" style="font-size:9px">Soulbrush Studio</div>
+
+      <!-- Watermark -->
+      <div class="watermark" id="watermark" style="display:none">© Soulbrush Studio</div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide bar -->
+<div class="slide-bar">
+  <span class="slide-bar-label">Slides</span>
+  <div class="slide-thumbs" id="slide-thumbs">
+    <button class="slide-thumb active" onclick="goToSlide(0)">1</button>
+  </div>
+  <button class="slide-add-btn" onclick="addSlide()" title="Add slide">+</button>
+  <button class="slide-del-btn" onclick="deleteSlide()" title="Delete current slide">&#10005;</button>
+</div>
+
+<!-- Action buttons -->
+<div class="action-row">
+  <button class="download-btn" onclick="downloadCanvas()">Download PNG</button>
+  <button class="download-all-btn" onclick="downloadAll()">Download All</button>
+</div>
+<div class="action-row project-row">
+  <button class="project-btn" onclick="saveProject()">💾 Save Project</button>
+  <button class="project-btn" onclick="loadProject()">📂 Load Project</button>
+  <button class="project-btn" onclick="exportProjectJSON()">⬇ Export JSON</button>
+  <button class="project-btn" onclick="document.getElementById('import-json').click()">⬆ Import JSON</button>
+  <input type="file" id="import-json" accept=".json" style="display:none" onchange="importProjectJSON(event)">
+</div>
+</div><!-- end canvas-column -->
+
+</div><!-- end mode-ig -->
+
+<!-- ═══ WALLPAPER MODE ═══ -->
+<div class="mode-panel wallpaper-mode" id="mode-wallpaper">
+
+<div class="controls">
+  <h3>Device</h3>
+  <div class="tab-row wp-device-row">
+    <button class="tab active" onclick="wpSwitchDevice('iphone-15-pro', this)">iPhone 15 Pro</button>
+    <button class="tab" onclick="wpSwitchDevice('iphone-15-max', this)">iPhone 15 Max</button>
+    <button class="tab" onclick="wpSwitchDevice('iphone-se', this)">iPhone SE</button>
+  </div>
+  <div class="tab-row wp-device-row">
+    <button class="tab" onclick="wpSwitchDevice('ipad-pro-11', this)">iPad Pro 11"</button>
+    <button class="tab" onclick="wpSwitchDevice('ipad-pro-13', this)">iPad Pro 13"</button>
+    <button class="tab" onclick="wpSwitchDevice('ipad-air', this)">iPad Air</button>
+  </div>
+
+  <h3>Artwork</h3>
+  <div class="image-controls">
+    <button class="img-btn" onclick="document.getElementById('wp-upload').click()">Upload Artwork</button>
+    <button class="img-btn remove" id="wp-remove-btn" onclick="wpRemoveImage()" style="display:none">Remove</button>
+    <input type="file" id="wp-upload" accept="image/*" style="display:none" onchange="wpHandleUpload(event)">
+  </div>
+
+  <h3 style="margin-top:20px">Position & Scale</h3>
+  <div class="size-row">
+    <div class="size-control">
+      <span class="size-label">Scale</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="wpAdjust('scale', -5)">−</button>
+        <span class="size-value" id="wp-scale-val">100%</span>
+        <button class="size-btn" onclick="wpAdjust('scale', 5)">+</button>
+      </div>
+    </div>
+    <div class="size-control">
+      <span class="size-label">X Offset</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="wpAdjust('x', -2)">−</button>
+        <span class="size-value" id="wp-x-val">50%</span>
+        <button class="size-btn" onclick="wpAdjust('x', 2)">+</button>
+      </div>
+    </div>
+    <div class="size-control">
+      <span class="size-label">Y Offset</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="wpAdjust('y', -2)">−</button>
+        <span class="size-value" id="wp-y-val">50%</span>
+        <button class="size-btn" onclick="wpAdjust('y', 2)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px">Background</h3>
+  <div class="color-row" id="wp-bg-row">
+    <button class="color-swatch active" style="background:#0d0920" onclick="wpSetBg('#0d0920', this)" title="Deep Night"></button>
+    <button class="color-swatch" style="background:#1a1a2e" onclick="wpSetBg('#1a1a2e', this)" title="Dark Purple"></button>
+    <button class="color-swatch" style="background:#0f1923" onclick="wpSetBg('#0f1923', this)" title="Dark Blue"></button>
+    <button class="color-swatch" style="background:#1a1210" onclick="wpSetBg('#1a1210', this)" title="Dark Warm"></button>
+    <button class="color-swatch" style="background:#f5f0eb" onclick="wpSetBg('#f5f0eb', this)" title="Cream"></button>
+    <button class="color-swatch" style="background:#ffffff" onclick="wpSetBg('#ffffff', this)" title="White"></button>
+    <button class="color-swatch" style="background:#000000" onclick="wpSetBg('#000000', this)" title="Black"></button>
+    <div class="color-custom" title="Custom color">
+      <input type="color" value="#0d0920" oninput="wpSetBg(this.value, null)">
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px">Fill Mode</h3>
+  <div class="tab-row">
+    <button class="tab wp-fit-btn active" onclick="wpSetFit('contain', this)">Contain</button>
+    <button class="tab wp-fit-btn" onclick="wpSetFit('cover', this)">Cover</button>
+  </div>
+
+  <div class="wp-info" id="wp-info">
+    <span id="wp-res-label">1179 × 2556 px</span>
+  </div>
+</div>
+
+<div class="canvas-column">
+  <div class="wp-canvas-wrapper" id="wp-canvas-wrapper">
+    <div class="wp-canvas" id="wp-canvas">
+      <div class="wp-placeholder" id="wp-placeholder">Upload your artwork</div>
+      <img id="wp-image" src="" alt="" style="display:none">
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="download-btn" onclick="wpDownload()">Download Wallpaper</button>
+  </div>
+</div>
+
+</div><!-- end mode-wallpaper -->
+
+<!-- ═══ PRINT MODE ═══ -->
+<div class="mode-panel print-mode" id="mode-print">
+
+<div class="controls">
+  <h3>Print Size</h3>
+  <div class="tab-row print-size-row">
+    <button class="tab active" onclick="printSwitchSize('5x7', this)">5×7"</button>
+    <button class="tab" onclick="printSwitchSize('4x6', this)">4×6"</button>
+    <button class="tab" onclick="printSwitchSize('8x10', this)">8×10"</button>
+  </div>
+  <div class="tab-row print-size-row">
+    <button class="tab" onclick="printSwitchSize('A4', this)">A4</button>
+    <button class="tab" onclick="printSwitchSize('A3', this)">A3</button>
+    <button class="tab" onclick="printSwitchSize('A5', this)">A5</button>
+  </div>
+
+  <h3 style="margin-top:20px">Orientation</h3>
+  <div class="tab-row">
+    <button class="tab print-orient-btn active" onclick="printSetOrientation('portrait', this)">Portrait</button>
+    <button class="tab print-orient-btn" onclick="printSetOrientation('landscape', this)">Landscape</button>
+  </div>
+
+  <h3 style="margin-top:20px">Artwork</h3>
+  <div class="image-controls">
+    <button class="img-btn" onclick="document.getElementById('print-upload').click()">Upload Artwork</button>
+    <button class="img-btn remove" id="print-remove-btn" onclick="printRemoveImage()" style="display:none">Remove</button>
+    <input type="file" id="print-upload" accept="image/*" style="display:none" onchange="printHandleUpload(event)">
+  </div>
+
+  <h3 style="margin-top:20px">Position & Scale</h3>
+  <div class="size-row">
+    <div class="size-control">
+      <span class="size-label">Scale</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="printAdjust('scale', -5)">−</button>
+        <span class="size-value" id="print-scale-val">100%</span>
+        <button class="size-btn" onclick="printAdjust('scale', 5)">+</button>
+      </div>
+    </div>
+    <div class="size-control">
+      <span class="size-label">X Offset</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="printAdjust('x', -2)">−</button>
+        <span class="size-value" id="print-x-val">50%</span>
+        <button class="size-btn" onclick="printAdjust('x', 2)">+</button>
+      </div>
+    </div>
+    <div class="size-control">
+      <span class="size-label">Y Offset</span>
+      <div class="size-buttons">
+        <button class="size-btn" onclick="printAdjust('y', -2)">−</button>
+        <span class="size-value" id="print-y-val">50%</span>
+        <button class="size-btn" onclick="printAdjust('y', 2)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px">Background</h3>
+  <div class="color-row" id="print-bg-row">
+    <button class="color-swatch active" style="background:#ffffff" onclick="printSetBg('#ffffff', this)" title="White"></button>
+    <button class="color-swatch" style="background:#f5f0eb" onclick="printSetBg('#f5f0eb', this)" title="Cream"></button>
+    <button class="color-swatch" style="background:#faf8f5" onclick="printSetBg('#faf8f5', this)" title="Warm White"></button>
+    <button class="color-swatch" style="background:#0d0920" onclick="printSetBg('#0d0920', this)" title="Deep Night"></button>
+    <button class="color-swatch" style="background:#000000" onclick="printSetBg('#000000', this)" title="Black"></button>
+    <div class="color-custom" title="Custom color">
+      <input type="color" value="#ffffff" oninput="printSetBg(this.value, null)">
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px">Fill Mode</h3>
+  <div class="tab-row">
+    <button class="tab print-fit-btn active" onclick="printSetFit('contain', this)">Contain</button>
+    <button class="tab print-fit-btn" onclick="printSetFit('cover', this)">Cover</button>
+  </div>
+
+  <h3 style="margin-top:20px">Watermark</h3>
+
+  <div class="watermark-controls">
+    <div class="wm-toggle-row">
+      <button class="text-effect-btn" id="print-wm-toggle" onclick="printToggleWm(this)">Off</button>
+      <input type="text" class="wm-text-input" id="print-wm-text" value="© Soulbrush Studio" oninput="printUpdateWm()" placeholder="Watermark text">
+    </div>
+    <div class="wm-options" id="print-wm-options" style="display:none">
+      <div class="wm-position-row">
+        <button class="wm-pos-btn" onclick="printSetWmPos('top-left', this)" title="Top Left">↖</button>
+        <button class="wm-pos-btn" onclick="printSetWmPos('top-right', this)" title="Top Right">↗</button>
+        <button class="wm-pos-btn active" onclick="printSetWmPos('bottom-right', this)" title="Bottom Right">↘</button>
+        <button class="wm-pos-btn" onclick="printSetWmPos('bottom-left', this)" title="Bottom Left">↙</button>
+        <button class="wm-pos-btn" onclick="printSetWmPos('center', this)" title="Center">✦</button>
+      </div>
+      <div class="opacity-control">
+        <label>Opacity</label>
+        <input type="range" class="opacity-slider" min="10" max="80" value="30" id="print-wm-opacity" oninput="printUpdateWm()">
+      </div>
+      <div class="tab-row" style="margin-top:8px">
+        <button class="tab print-wm-color-btn active" onclick="printSetWmColor('dark', this)">Dark</button>
+        <button class="tab print-wm-color-btn" onclick="printSetWmColor('light', this)">Light</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wp-info" id="print-info">
+    <span id="print-res-label">1500 × 2100 px (300 DPI)</span>
+  </div>
+</div>
+
+<div class="canvas-column">
+  <div class="wp-canvas-wrapper" id="print-canvas-wrapper">
+    <div class="wp-canvas" id="print-canvas" style="aspect-ratio:5/7; background:#ffffff">
+      <div class="wp-placeholder" id="print-placeholder">Upload your artwork</div>
+      <img id="print-image" src="" alt="" style="display:none">
+      <div class="print-watermark" id="print-watermark" style="display:none">© Soulbrush Studio</div>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="download-btn" onclick="printDownload()">Download Print (300 DPI)</button>
+  </div>
+</div>
+
+</div><!-- end mode-print -->
+
+<script src="js/app.js"></script>
+<script src="js/wallpaper.js"></script>
+<script src="js/print.js"></script>
+</body>
+</html>
