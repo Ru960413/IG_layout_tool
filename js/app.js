@@ -1,3 +1,29 @@
+// ─── Shared: ensure blob < 10MB ───
+const MAX_BLOB_SIZE = 10 * 1024 * 1024;
+
+function canvasToConstrainedBlob(canvas) {
+  return new Promise(function(resolve) {
+    canvas.toBlob(function(pngBlob) {
+      if (pngBlob && pngBlob.size <= MAX_BLOB_SIZE) {
+        resolve({ blob: pngBlob, ext: 'png' });
+        return;
+      }
+      var quality = 0.92;
+      function tryJpeg() {
+        canvas.toBlob(function(jpgBlob) {
+          if (jpgBlob && jpgBlob.size <= MAX_BLOB_SIZE || quality <= 0.5) {
+            resolve({ blob: jpgBlob, ext: 'jpg' });
+          } else {
+            quality -= 0.05;
+            tryJpeg();
+          }
+        }, 'image/jpeg', quality);
+      }
+      tryJpeg();
+    }, 'image/png');
+  });
+}
+
 // Generate stars
 const starsEl = document.getElementById('stars');
 for (let i = 0; i < 80; i++) {
@@ -526,10 +552,10 @@ function downloadCanvas() {
   btn.disabled = true;
   btn.textContent = 'Exporting...';
 
-  exportCanvasToBlob().then(blob => {
+  exportCanvasToBlob().then(function(result) {
     const link = document.createElement('a');
-    link.download = `soulbrush-slide${currentSlide + 1}-${Date.now()}.png`;
-    link.href = URL.createObjectURL(blob);
+    link.download = `soulbrush-slide${currentSlide + 1}-${Date.now()}.${result.ext}`;
+    link.href = URL.createObjectURL(result.blob);
     link.click();
     URL.revokeObjectURL(link.href);
     btn.disabled = false;
@@ -560,7 +586,7 @@ function exportCanvasToBlob() {
       const listActions = clonedDoc.querySelector('.list-actions');
       if (listActions) listActions.style.display = 'none';
     }
-  }).then(c => new Promise(resolve => c.toBlob(resolve, 'image/png')));
+  }).then(c => canvasToConstrainedBlob(c));
 }
 
 // ─── Download all slides ───
@@ -585,10 +611,10 @@ async function downloadAll() {
     // Small delay to let DOM render
     await new Promise(r => setTimeout(r, 200));
 
-    const blob = await exportCanvasToBlob();
+    const result = await exportCanvasToBlob();
     const link = document.createElement('a');
-    link.download = `soulbrush-slide${i + 1}.png`;
-    link.href = URL.createObjectURL(blob);
+    link.download = `soulbrush-slide${i + 1}.${result.ext}`;
+    link.href = URL.createObjectURL(result.blob);
     link.click();
     URL.revokeObjectURL(link.href);
   }

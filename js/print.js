@@ -208,14 +208,14 @@ function printDownload() {
       }
     }
 
-    canvas.toBlob(function(blob) {
+    canvasToConstrainedBlob(canvas).then(function(result) {
       const link = document.createElement('a');
       const sizeName = printSizes[printCurrentSize].name.replace(/[×"]/g, 'x').replace(/\s/g, '');
-      link.download = `soulbrush-print-${sizeName}-300dpi.png`;
-      link.href = URL.createObjectURL(blob);
+      link.download = `soulbrush-print-${sizeName}-300dpi.${result.ext}`;
+      link.href = URL.createObjectURL(result.blob);
       link.click();
       URL.revokeObjectURL(link.href);
-    }, 'image/png');
+    });
   };
   srcImg.src = img.src;
 }

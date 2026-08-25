@@ -163,13 +163,13 @@ function wpDownload() {
 
     ctx.drawImage(srcImg, drawX, drawY, drawW, drawH);
 
-    canvas.toBlob(function(blob) {
+    canvasToConstrainedBlob(canvas).then(function(result) {
       const link = document.createElement('a');
-      link.download = `soulbrush-wallpaper-${device.name.replace(/[\s"]/g, '-')}.png`;
-      link.href = URL.createObjectURL(blob);
+      link.download = `soulbrush-wallpaper-${device.name.replace(/[\s"]/g, '-')}.${result.ext}`;
+      link.href = URL.createObjectURL(result.blob);
       link.click();
       URL.revokeObjectURL(link.href);
-    }, 'image/png');
+    });
   };
   srcImg.src = img.src;
 }
