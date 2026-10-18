@@ -1,6 +1,7 @@
+/* self-host: GitHub release 直連被 CORS 擋，字體從未真正載入過（2026-10-18 修） */
 @font-face {
   font-family: 'ChenYuluoyan';
-  src: url('https://github.com/Chenyu-otf/chenyuluoyan_thin/releases/download/v2.0/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
+  src: url('../fonts/ChenYuluoyan-Thin.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

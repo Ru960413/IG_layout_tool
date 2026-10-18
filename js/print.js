@@ -137,6 +137,8 @@ function printDownload() {
   canvas.width = dim.w;
   canvas.height = dim.h;
   const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
 
   // Background
   ctx.fillStyle = printState.bg;
@@ -215,6 +217,18 @@ function printDownload() {
       link.href = URL.createObjectURL(result.blob);
       link.click();
       URL.revokeObjectURL(link.href);
+
+      // 匯出結果透明化：超過 10MB 會自動轉 JPEG 壓進 Oen 上限，這裡講清楚拿到的是什麼
+      const btn = document.querySelector('button[onclick="printDownload()"]');
+      if (btn) {
+        const mb = (result.blob.size / 1024 / 1024).toFixed(1);
+        const label = result.ext === 'png'
+          ? `PNG · ${mb}MB ✓`
+          : `JPEG q${result.quality.toFixed(2)} · ${mb}MB ✓（已壓進 10MB 內）`;
+        const original = 'Download Print (300 DPI)';
+        btn.textContent = label;
+        setTimeout(() => { btn.textContent = original; }, 4000);
+      }
     });
   };
   srcImg.src = img.src;

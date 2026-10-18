@@ -5,14 +5,14 @@ function canvasToConstrainedBlob(canvas) {
   return new Promise(function(resolve) {
     canvas.toBlob(function(pngBlob) {
       if (pngBlob && pngBlob.size <= MAX_BLOB_SIZE) {
-        resolve({ blob: pngBlob, ext: 'png' });
+        resolve({ blob: pngBlob, ext: 'png', quality: 1 });
         return;
       }
       var quality = 0.92;
       function tryJpeg() {
         canvas.toBlob(function(jpgBlob) {
           if (jpgBlob && jpgBlob.size <= MAX_BLOB_SIZE || quality <= 0.5) {
-            resolve({ blob: jpgBlob, ext: 'jpg' });
+            resolve({ blob: jpgBlob, ext: 'jpg', quality: quality });
           } else {
             quality -= 0.05;
             tryJpeg();
@@ -574,7 +574,8 @@ function exportCanvasToBlob() {
   const exportWidth = 1080;
   const scale = exportWidth / canvas.offsetWidth;
 
-  return html2canvas(canvas, {
+  // 等 webfont 全部就位再截，避免首次匯出吃到 fallback 字體
+  return document.fonts.ready.then(() => html2canvas(canvas, {
     scale: scale,
     width: canvas.offsetWidth,
     height: canvas.offsetHeight,
@@ -586,7 +587,7 @@ function exportCanvasToBlob() {
       const listActions = clonedDoc.querySelector('.list-actions');
       if (listActions) listActions.style.display = 'none';
     }
-  }).then(c => canvasToConstrainedBlob(c));
+  })).then(c => canvasToConstrainedBlob(c));
 }
 
 // ─── Download all slides ───
@@ -670,8 +671,13 @@ function setWmOpacity(val) {
 function saveProject() {
   saveCurrentSlide();
   const data = JSON.stringify(slides);
-  localStorage.setItem('soulbrush-project', data);
-  alert('Project saved! (' + slides.length + ' slides)');
+  // localStorage 配額約 5MB，slides 內含上傳圖的 dataURL 很容易爆——爆了要講，不能默默失敗
+  try {
+    localStorage.setItem('soulbrush-project', data);
+    alert('Project saved! (' + slides.length + ' slides)');
+  } catch (e) {
+    alert('瀏覽器儲存空間不夠（專案裡的圖片太大）。\n請改用「⬇ Export JSON」存成檔案，那邊沒有大小限制。');
+  }
 }
 
 function loadProject() {
